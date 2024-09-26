@@ -1,8 +1,24 @@
+const mongoose = require('mongoose');   
 const express = require('express')
+
 const app = express()
 
-app.use(express.urlencoded({extended: false}))
 app.use(express.static('./public'))
+
+// import dotenv
+require('dotenv').config()
+
+// import db
+const db = require('./db/connect').Mongo_URL; 
+
+// db connection
+mongoose.connect(db, {dbName:'task-manger-app'})
+.then(() => console.log('connected to Mongodb'))
+
+.catch((err) => console.error(err))
+
+app.use(express.urlencoded({extended: false}))
+
 
 app.listen(9000,() =>{
     console.log('server is runing on port 9000')
